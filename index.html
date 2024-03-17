@@ -44,11 +44,14 @@
       color: white;
       margin-top: -300px; /* Adjusted margin to move text higher */
     }
-    button {
+    .button-container {
       position: absolute;
-      bottom: 400px; /* Adjusted position */
+      bottom: 400px;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 2;
+    }
+    button {
       background-color: white;
       color: #f7931b;
       border: none;
@@ -58,7 +61,7 @@
       cursor: pointer;
       transition: background-color 0.3s, color 0.3s;
       font-weight: bold; /* Making the text bold */
-      z-index: 2; /* Ensure buttons are above raining emojis */
+      margin: 0 10px;
     }
     button:hover {
       background-color: #e67e22;
@@ -111,16 +114,32 @@
         transform: rotate(360deg);
       }
     }
+
+    /* Style for the bottom-left text */
+    .bottom-left-text {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+      font-size: 14px;
+      z-index: 2; /* Ensure it's above the background */
+    }
   </style>
 </head>
 <body>
   <div class="content">
     <h1 class="juiceware">JuiceWare</h1>
   </div>
-  <a href="https://screenshare.pics/watch.php?id=NJOW53"><button>Showcase</button></a>
+  <div class="button-container">
+    <a href="features.html"><button>Features</button></a>
+    <a href="showcase.html"><button>Showcase</button></a>
+  </div>
 
   <!-- Container for raining emojis -->
   <div class="emoji-container" id="emoji-container"></div>
+
+  <!-- Bottom-left text -->
+  <div class="bottom-left-text">Made with love by the Juiceware team</div>
 
   <script>
     // JavaScript for creating and animating raining emojis
