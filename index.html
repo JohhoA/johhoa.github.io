@@ -16,6 +16,7 @@
       background-size: 400% 400%;
       animation: gradientAnimation 15s ease infinite;
       position: relative; /* Position relative for absolute positioning */
+      overflow: hidden; /* Prevent scrolling */
     }
     
     @keyframes gradientAnimation {
@@ -35,6 +36,8 @@
       animation: text-animation 3s infinite alternate ease-in-out, wobble 3s infinite alternate ease-in-out;
       text-shadow: 2px 2px 5px #c0392b; /* Dark orange outline */
       transform: rotateZ(3deg); /* Initial slight rotation */
+      position: relative;
+      z-index: 2; /* Ensure content is above raining emojis */
     }
     .juiceware {
       font-size: 72px;
@@ -55,6 +58,7 @@
       cursor: pointer;
       transition: background-color 0.3s, color 0.3s;
       font-weight: bold; /* Making the text bold */
+      z-index: 2; /* Ensure buttons are above raining emojis */
     }
     button:hover {
       background-color: #e67e22;
@@ -75,6 +79,29 @@
       50% { transform: rotateZ(-3deg); } /* Rotate slightly to the other side */
       100% { transform: rotateZ(3deg); } /* Back to initial rotation */
     }
+
+    /* Styles for the falling emojis */
+    .emoji-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; /* Ensure emojis are behind content */
+    }
+
+    .emoji-rain {
+      position: absolute;
+      top: -20px; /* Start above the viewport */
+      animation: fall 5s linear infinite; /* Adjust the duration as needed */
+    }
+    
+    @keyframes fall {
+      to {
+        top: 100vh; /* Move to the bottom of the viewport */
+        opacity: 0; /* Fade out */
+      }
+    }
   </style>
 </head>
 <body>
@@ -82,5 +109,36 @@
     <h1 class="juiceware">JuiceWare</h1>
   </div>
   <a href="https://screenshare.pics/watch.php?id=NJOW53"><button>Showcase</button></a>
+
+  <!-- Container for raining emojis -->
+  <div class="emoji-container" id="emoji-container"></div>
+
+  <script>
+    // JavaScript for creating and animating raining emojis
+    const container = document.getElementById('emoji-container');
+
+    function createEmoji() {
+      const emoji = document.createElement('span');
+      emoji.innerHTML = '🍊'; // Use any orange emoji you like
+      emoji.classList.add('emoji-rain');
+
+      // Randomize starting position and animation duration
+      const startPosition = Math.random() * window.innerWidth;
+      const duration = Math.random() * 3 + 2; // Between 2 to 5 seconds
+
+      emoji.style.left = `${startPosition}px`;
+      emoji.style.animationDuration = `${duration}s`;
+
+      container.appendChild(emoji);
+
+      // Remove the emoji from DOM after animation ends
+      emoji.addEventListener('animationend', () => {
+        emoji.remove();
+      });
+    }
+
+    // Generate raining emojis every second
+    setInterval(createEmoji, 1000);
+  </script>
 </body>
 </html>
