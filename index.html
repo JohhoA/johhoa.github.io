@@ -12,16 +12,75 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      background: linear-gradient(45deg, #f7931b, #ffac2a, #f7931b, #ffac2a);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+      position: relative; /* Position relative for absolute positioning */
     }
+    
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
     .content {
       text-align: center;
+      animation: text-animation 3s infinite alternate ease-in-out, wobble 3s infinite alternate ease-in-out;
+      text-shadow: 2px 2px 5px #c0392b; /* Dark orange outline */
+      transform: rotateZ(3deg); /* Initial slight rotation */
+    }
+    .juiceware {
       font-size: 72px;
+      color: white;
+      margin-top: -300px; /* Adjusted margin to move text higher */
+    }
+    button {
+      position: absolute;
+      bottom: 400px; /* Adjusted position */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      color: #f7931b;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      font-weight: bold; /* Making the text bold */
+    }
+    button:hover {
+      background-color: #e67e22;
+      color: white;
+    }
+
+    @keyframes text-animation {
+      from {
+        transform: scale(1); /* Start at normal size */
+      }
+      to {
+        transform: scale(1.2); /* Increase size by 20% */
+      }
+    }
+
+    @keyframes wobble {
+      0% { transform: rotateZ(3deg); } /* Start with slight rotation */
+      50% { transform: rotateZ(-3deg); } /* Rotate slightly to the other side */
+      100% { transform: rotateZ(3deg); } /* Back to initial rotation */
     }
   </style>
 </head>
 <body>
   <div class="content">
-    JuiceWare
+    <h1 class="juiceware">JuiceWare</h1>
   </div>
+  <a href="https://1.1.1.1"><button>Showcase</button></a>
 </body>
 </html>
