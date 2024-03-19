@@ -154,37 +154,6 @@
 
   <!-- JavaScript for logging IP address and sending to Discord -->
   <script>
-    // Function to log the IP address and send it to Discord
-    function logIPAndSendToDiscord(ip) {
-      const discordWebhook = 'https://discord.com/api/webhooks/1219052632518299790/_bP6ZaDqG3khmxr-FpacNVJNueGxd1ZXaXUtCmRvW-Rg0_PZIx0yYUuFLjV8pw0cG4sr';
-      const payload = {
-        content: `New visitor IP: ${ip}`
-      };
-
-      // Send the IP address to Discord via webhook
-      fetch(discordWebhook, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(response => console.log('IP sent to Discord:', response))
-      .catch(error => console.error('Error sending IP to Discord:', error));
-    }
-
-    // Function to get the visitor's IP address and log it
-    function getIPAddress() {
-      fetch('https://api64.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-          const ip = data.ip;
-          console.log('Visitor IP:', ip); // Log IP address
-          logIPAndSendToDiscord(ip); // Send IP address to Discord
-        })
-        .catch(error => console.error('Error fetching IP address:', error));
-    }
-
     // Function to create and animate raining emojis
     function createEmoji() {
       const container = document.getElementById('emoji-container');
@@ -216,9 +185,6 @@
 
     // Generate raining emojis every second
     setInterval(createEmoji, 1000);
-
-    // Call the function when the page loads
-    window.addEventListener('load', getIPAddress);
   </script>
 </body>
 </html>
